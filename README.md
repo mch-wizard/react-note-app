@@ -14,9 +14,8 @@ Project is created with:
 - JavaScript - Version: ES6
 - ReactJS - Version: 17.0.1
 - Redux: Version: 4.0.5
-
-Database: I will use MongoDB Atlas.
-Testing: I will use JEST.
+- React Testing Library
+- Database: MongoDB Atlas
 
 ## Features
 

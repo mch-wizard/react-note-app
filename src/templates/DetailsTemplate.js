@@ -6,6 +6,7 @@ import UserPageTemplate from 'templates/UserPageTemplate';
 import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Button from 'components/atoms/Button/Button';
+import withContext from 'hoc/withContext';
 
 const StyledWrapper = styled.div`
   padding: 25px 150px 25px 70px;
@@ -29,11 +30,6 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-const StyledParagrph = styled(Paragraph)`
-  margin: 0;
-  font-weight: ${({ theme }) => theme.bold};
-`;
-
 const StyledLink = styled.a`
   display: block;
   font-weight: ${({ theme }) => theme.bold};
@@ -52,19 +48,18 @@ const StyledImage = styled.img`
   border-radius: 50%;
 `;
 
-const DetailsTemplate = ({ pageType, title, created, content, articleUrl, twitterName }) => (
-  <UserPageTemplate pageType={pageType}>
+const DetailsTemplate = ({ pageContext, title, content, articleUrl, twitterName }) => (
+  <UserPageTemplate>
     <StyledWrapper>
       <StyledPageHeader>
         <StyledHeading big as="h1">
           {title}
         </StyledHeading>
-        <StyledParagrph>{created}</StyledParagrph>
       </StyledPageHeader>
       <Paragraph>{content}</Paragraph>
-      {pageType === 'articles' && <StyledLink href={articleUrl}>Open article</StyledLink>}
-      {pageType === 'twitters' && <StyledImage alt={title} src={`https://unavatar.now.sh/${twitterName}`} />}
-      <Button as={Link} to={`/${pageType}`} activeColor={pageType}>
+      {pageContext === 'articles' && <StyledLink href={articleUrl}>Open article</StyledLink>}
+      {pageContext === 'twitters' && <StyledImage alt={title} src={`https://unavatar.now.sh/${twitterName}`} />}
+      <Button as={Link} to={`/${pageContext}`} activeColor={pageContext}>
         save / close
       </Button>
     </StyledWrapper>
@@ -72,9 +67,8 @@ const DetailsTemplate = ({ pageType, title, created, content, articleUrl, twitte
 );
 
 DetailsTemplate.propTypes = {
-  pageType: PropTypes.string.isRequired,
+  pageContext: PropTypes.oneOf(['notes', 'articles', 'twitters']).isRequired,
   title: PropTypes.string,
-  created: PropTypes.string,
   content: PropTypes.string,
   articleUrl: PropTypes.string,
   twitterName: PropTypes.string,
@@ -82,10 +76,9 @@ DetailsTemplate.propTypes = {
 
 DetailsTemplate.defaultProps = {
   title: '',
-  created: '',
   content: '',
   articleUrl: '',
   twitterName: '',
 };
 
-export default DetailsTemplate;
+export default withContext(DetailsTemplate);

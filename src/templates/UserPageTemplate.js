@@ -1,21 +1,21 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Sidebar from 'components/organisms/Sidebar/Sidebar';
 
-const UserPageTemplate = ({ children, pageType }) => (
-  <>
-    <Sidebar pageType={pageType} />
+const StyledWrapper = styled.div`
+  padding-left: 150px;
+`;
+
+const UserPageTemplate = ({ children }) => (
+  <StyledWrapper>
+    <Sidebar />
     {children}
-  </>
+  </StyledWrapper>
 );
 
 UserPageTemplate.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.node]),
-  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
-};
-
-UserPageTemplate.defaultProps = {
-  pageType: 'notes',
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.node]).isRequired,
 };
 
 export default UserPageTemplate;
